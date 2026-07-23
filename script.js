@@ -133,9 +133,11 @@ function setupMusicSample() {
   if (!muteBtn || !weddingAudio) return;
 
   let muted = false;
+  let playStarted = false;
 
   weddingAudio.volume = 0.35;
   weddingAudio.muted = false;
+  weddingAudio.autoplay = true;
 
   function updateMuteState() {
     weddingAudio.muted = muted;
@@ -143,8 +145,10 @@ function setupMusicSample() {
   }
 
   async function tryPlay() {
+    if (playStarted) return;
     try {
       await weddingAudio.play();
+      playStarted = true;
     } catch (error) {
       // Mobile browsers may require first user interaction.
     }
@@ -168,6 +172,17 @@ function setupMusicSample() {
   window.addEventListener("pointerdown", unlockAndStart, { once: true });
   window.addEventListener("touchstart", unlockAndStart, { once: true });
   window.addEventListener("keydown", unlockAndStart, { once: true });
+  window.addEventListener("pageshow", tryPlay, { once: true });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      tryPlay();
+    }
+  });
+
+  window.addEventListener("load", () => {
+    tryPlay();
+  });
 
   setTimeout(() => {
     tryPlay();
