@@ -28,6 +28,89 @@ body {
     linear-gradient(145deg, #fffaf4 0%, #f8ecdf 35%, #f3e9db 100%);
 }
 
+.intro-doors {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  overflow: hidden;
+  animation: hideIntro 160ms linear 1650ms forwards;
+}
+
+.intro-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(217, 203, 191, 0.34)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.32) 0,
+      rgba(255, 255, 255, 0.32) 10px,
+      rgba(225, 216, 206, 0.4) 10px,
+      rgba(225, 216, 206, 0.4) 20px
+    ),
+    linear-gradient(140deg, #ffffff, #efe5db);
+  box-shadow:
+    inset 0 0 0 2px rgba(241, 233, 225, 0.95),
+    inset 0 0 40px rgba(183, 161, 139, 0.16);
+}
+
+.intro-door::before,
+.intro-door::after {
+  content: "";
+  position: absolute;
+}
+
+.intro-door::before {
+  inset: 12% 10%;
+  border-radius: 10px;
+  border: 2px solid rgba(201, 183, 165, 0.45);
+}
+
+.intro-door::after {
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: radial-gradient(circle at 35% 35%, #fff5e2, #d4a070 60%, #9b673d 100%);
+}
+
+.intro-door-left {
+  left: 0;
+  transform-origin: left center;
+  animation: introOpenLeft 1300ms cubic-bezier(0.2, 0.82, 0.2, 1) 320ms forwards;
+}
+
+.intro-door-left::after {
+  right: 14px;
+}
+
+.intro-door-right {
+  right: 0;
+  transform-origin: right center;
+  animation: introOpenRight 1300ms cubic-bezier(0.2, 0.82, 0.2, 1) 320ms forwards;
+}
+
+.intro-door-right::after {
+  left: 14px;
+}
+
+.intro-door-title {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Lalezar", cursive;
+  font-size: clamp(32px, 8vw, 54px);
+  color: #fff8f0;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+  animation: introTitleFade 900ms ease 350ms forwards;
+}
+
 .page {
   position: relative;
   min-height: 100dvh;
@@ -203,6 +286,23 @@ body {
   border-bottom: 1px solid rgba(91, 47, 38, 0.5);
 }
 
+.mute-btn {
+  position: fixed;
+  right: 14px;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  z-index: 40;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(45deg, #a25534, #d2814f);
+  box-shadow: 0 8px 16px rgba(162, 85, 52, 0.32);
+  cursor: pointer;
+}
+
 
 @keyframes reveal {
   from {
@@ -213,6 +313,43 @@ body {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes introOpenLeft {
+  from {
+    transform: perspective(1100px) rotateY(0deg);
+  }
+
+  to {
+    transform: perspective(1100px) rotateY(-110deg);
+  }
+}
+
+@keyframes introOpenRight {
+  from {
+    transform: perspective(1100px) rotateY(0deg);
+  }
+
+  to {
+    transform: perspective(1100px) rotateY(110deg);
+  }
+}
+
+@keyframes introTitleFade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes hideIntro {
+  to {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -234,6 +371,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .intro-doors {
+    display: none;
+  }
+
   *,
   *::before,
   *::after {

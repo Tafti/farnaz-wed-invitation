@@ -43,6 +43,12 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="intro-doors" aria-hidden="true">
+      <div class="intro-door intro-door-left"></div>
+      <div class="intro-door intro-door-right"></div>
+      <div class="intro-door-title">دعوت عروسی</div>
+    </div>
+
     <main class="page">
       <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
       <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
@@ -75,6 +81,12 @@
 
       </section>
     </main>
+
+    <button id="muteBtn" class="mute-btn" type="button" aria-label="قطع یا وصل صدا">
+      صدا: روشن
+    </button>
+
+    <audio id="weddingAudio" src="assets/wedding.mp3" loop preload="auto"></audio>
 
     <script src="script.js"></script>
   </body>

@@ -1,5 +1,7 @@
 const scratchCanvas = document.getElementById("scratchCanvas");
 const scratchHint = document.getElementById("scratchHint");
+const muteBtn = document.getElementById("muteBtn");
+const weddingAudio = document.getElementById("weddingAudio");
 
 const cardData = {
   title: "دعوت نامه عروسی - فرناز و شهریار",
@@ -127,4 +129,50 @@ function setupScratchCard() {
   window.addEventListener("touchend", stopScratch);
 }
 
+function setupMusicSample() {
+  if (!muteBtn || !weddingAudio) return;
+
+  let muted = false;
+
+  weddingAudio.volume = 0.35;
+  weddingAudio.muted = false;
+
+  function updateMuteState() {
+    weddingAudio.muted = muted;
+    muteBtn.textContent = muted ? "صدا: خاموش" : "صدا: روشن";
+  }
+
+  async function tryPlay() {
+    try {
+      await weddingAudio.play();
+    } catch (error) {
+      // Mobile browsers may require first user interaction.
+    }
+  }
+
+  muteBtn.addEventListener("click", async () => {
+    muted = !muted;
+    updateMuteState();
+    if (!muted) {
+      await tryPlay();
+    }
+  });
+
+  const unlockAndStart = async () => {
+    await tryPlay();
+    window.removeEventListener("pointerdown", unlockAndStart);
+    window.removeEventListener("touchstart", unlockAndStart);
+    window.removeEventListener("keydown", unlockAndStart);
+  };
+
+  window.addEventListener("pointerdown", unlockAndStart, { once: true });
+  window.addEventListener("touchstart", unlockAndStart, { once: true });
+  window.addEventListener("keydown", unlockAndStart, { once: true });
+
+  setTimeout(() => {
+    tryPlay();
+  }, 120);
+}
+
 setupScratchCard();
+setupMusicSample();
