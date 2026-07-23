@@ -108,8 +108,11 @@ function setupScratchCard(onFirstScratch) {
   function startScratch(event) {
     scratching = true;
     if (!hasTriggeredScratchAudio) {
-      hasTriggeredScratchAudio = true;
-      onFirstScratch?.();
+      Promise.resolve(onFirstScratch?.()).then((didStart) => {
+        if (didStart) {
+          hasTriggeredScratchAudio = true;
+        }
+      });
     }
     eraseAt(event);
     if (scratchHint) scratchHint.style.opacity = "0.25";
@@ -142,7 +145,7 @@ function setupMusicSample() {
 
   weddingAudio.volume = 0.35;
   weddingAudio.muted = false;
-  weddingAudio.autoplay = true;
+  weddingAudio.load();
 
   function updateMuteState() {
     weddingAudio.muted = muted;
@@ -150,12 +153,14 @@ function setupMusicSample() {
   }
 
   async function tryPlay() {
-    if (playStarted) return;
+    if (playStarted) return true;
     try {
       await weddingAudio.play();
       playStarted = true;
+      return true;
     } catch (error) {
       // Mobile browsers may require first user interaction.
+      return false;
     }
   }
 
