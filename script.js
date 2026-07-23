@@ -95,21 +95,27 @@ function setupScratchCard(onFirstScratch) {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    // Core stroke plus fine uneven bristles creates a natural brush reveal.
-    ctx.lineWidth = 30;
+    // Continuous brush stroke with offset bristles; no stamped erase circles.
+    ctx.lineWidth = 34;
     ctx.beginPath();
     ctx.moveTo(from.x, from.y);
     ctx.lineTo(point.x, point.y);
     ctx.stroke();
 
-    for (let bristle = 0; bristle < 7; bristle += 1) {
-      const offset = (Math.random() - 0.5) * 18;
+    const dx = point.x - from.x;
+    const dy = point.y - from.y;
+    const length = Math.hypot(dx, dy) || 1;
+    const normalX = -dy / length;
+    const normalY = dx / length;
+
+    for (let bristle = 0; bristle < 9; bristle += 1) {
+      const offset = (bristle - 4) * 3.1 + (Math.random() - 0.5) * 1.5;
       const width = 1.4 + Math.random() * 2.8;
 
       ctx.lineWidth = width;
       ctx.beginPath();
-      ctx.moveTo(from.x + offset, from.y + offset);
-      ctx.lineTo(point.x + offset, point.y + offset);
+      ctx.moveTo(from.x + normalX * offset, from.y + normalY * offset);
+      ctx.lineTo(point.x + normalX * offset, point.y + normalY * offset);
       ctx.stroke();
     }
 
