@@ -56,6 +56,22 @@ function setupScratchCard(onFirstScratch) {
   let scratching = false;
   let hasTriggeredScratchAudio = false;
 
+  function triggerScratchAudio() {
+    if (hasTriggeredScratchAudio) return;
+    const maybePromise = onFirstScratch?.();
+
+    if (!maybePromise || typeof maybePromise.then !== "function") {
+      hasTriggeredScratchAudio = true;
+      return;
+    }
+
+    maybePromise.then((didStart) => {
+      if (didStart) {
+        hasTriggeredScratchAudio = true;
+      }
+    });
+  }
+
   function getPoint(event) {
     const rect = scratchCanvas.getBoundingClientRect();
     const touch = event.touches?.[0] || event.changedTouches?.[0];
@@ -107,13 +123,7 @@ function setupScratchCard(onFirstScratch) {
 
   function startScratch(event) {
     scratching = true;
-    if (!hasTriggeredScratchAudio) {
-      Promise.resolve(onFirstScratch?.()).then((didStart) => {
-        if (didStart) {
-          hasTriggeredScratchAudio = true;
-        }
-      });
-    }
+    triggerScratchAudio();
     eraseAt(event);
     if (scratchHint) scratchHint.style.opacity = "0.25";
   }
@@ -128,6 +138,10 @@ function setupScratchCard(onFirstScratch) {
   const resizeObserver = new ResizeObserver(() => resizeCanvas());
   resizeObserver.observe(container);
 
+  container.addEventListener("pointerdown", triggerScratchAudio, { passive: true });
+  container.addEventListener("touchstart", triggerScratchAudio, { passive: true });
+  container.addEventListener("click", triggerScratchAudio, { passive: true });
+  scratchCanvas.addEventListener("pointerdown", triggerScratchAudio, { passive: true });
   scratchCanvas.addEventListener("mousedown", startScratch);
   scratchCanvas.addEventListener("mousemove", eraseAt);
   window.addEventListener("mouseup", stopScratch);
