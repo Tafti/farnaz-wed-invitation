@@ -195,5 +195,5 @@ function setupMusicSample() {
 
 const musicController = setupMusicSample();
 setupScratchCard(() => {
-  musicController?.start();
+  return musicController?.start();
 });
