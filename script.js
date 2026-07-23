@@ -2,6 +2,8 @@ const scratchCanvas = document.getElementById("scratchCanvas");
 const scratchHint = document.getElementById("scratchHint");
 const muteBtn = document.getElementById("muteBtn");
 const weddingAudio = document.getElementById("weddingAudio");
+const addressBtn = document.getElementById("addressBtn");
+const addressModal = document.getElementById("addressModal");
 
 const cardData = {
   title: "دعوت نامه عروسی - فرناز و شهریار",
@@ -226,17 +228,18 @@ function setupScratchCard(onFirstScratch) {
 function setupMusicSample() {
   if (!muteBtn || !weddingAudio) return;
 
-  let muted = false;
+  let muted = sessionStorage.getItem("weddingMusicMuted") === "true";
   let playStarted = false;
   let playPending = null;
 
   weddingAudio.volume = 0.35;
-  weddingAudio.muted = false;
+  weddingAudio.muted = muted;
   weddingAudio.load();
 
   function updateMuteState() {
     weddingAudio.muted = muted;
     muteBtn.textContent = muted ? "صدا: خاموش" : "صدا: روشن";
+    sessionStorage.setItem("weddingMusicMuted", String(muted));
   }
 
   function tryPlay() {
@@ -255,6 +258,7 @@ function setupMusicSample() {
         .then(() => {
           playStarted = true;
           playPending = null;
+          sessionStorage.setItem("weddingMusicPlaying", "true");
           return true;
         })
         .catch(() => {
@@ -288,3 +292,38 @@ const musicController = setupMusicSample();
 setupScratchCard(() => {
   return musicController?.start();
 });
+
+function setupAddressModal() {
+  if (!addressBtn || !addressModal) return;
+
+  const closeModal = () => {
+    addressModal.classList.remove("is-open");
+    addressModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    addressBtn.focus();
+  };
+
+  addressBtn.addEventListener("click", () => {
+    addressModal.classList.add("is-open");
+    addressModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    addressModal.querySelector("[data-close-address]")?.focus();
+  });
+
+  addressModal.querySelectorAll("[data-close-address]").forEach((element) => {
+    element.addEventListener("click", closeModal);
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && addressModal.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+}
+
+setupAddressModal();
+
+// A separate page cannot preserve the same audio stream, but resumes the loop after navigation.
+if (!scratchCanvas && sessionStorage.getItem("weddingMusicPlaying") === "true") {
+  musicController?.start();
+}

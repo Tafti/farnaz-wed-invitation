@@ -69,18 +69,34 @@
 
         <div class="details">
           <p class="detail-title">محل برگزاری</p>
-          <a
-            class="venue-link"
-            href="address.html"
-            aria-label="باز کردن صفحه آدرس"
-          >
+          <button id="addressBtn" class="venue-link address-open-btn" type="button" aria-haspopup="dialog">
             مشاهده آدرس مراسم
-          </a>
-          <p class="detail-note">برای دیدن نقشه و مسیر، وارد صفحه آدرس شوید</p>
+          </button>
+          <p class="detail-note">برای دیدن نقشه و مسیر، روی آدرس بزنید</p>
         </div>
 
       </section>
     </main>
+
+    <div id="addressModal" class="address-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="آدرس مراسم">
+      <div class="address-modal-backdrop" data-close-address></div>
+      <section class="address-modal-content">
+        <button class="address-modal-close" type="button" data-close-address aria-label="بستن صفحه آدرس">×</button>
+        <p class="eyebrow">آدرس مراسم</p>
+        <h2 class="names">فرناز و شهریار</h2>
+        <div class="address-image-wrap">
+          <img src="address.jpg" alt="نقشه و QR آدرس مراسم" class="address-image" />
+        </div>
+        <a
+          class="map-route-link"
+          href="https://balad.ir/p/%D8%A8%D8%A7%D8%BA-%D8%B9%D9%85%D8%A7%D8%B1%D8%AA-%D9%85%D8%A7%D8%B1%DB%8C%D9%86%D8%A7_ceremonial-services-6sV43KszL1FpoL#15/35.67526/51.08919"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          باز کردن مسیر در نقشه
+        </a>
+      </section>
+    </div>
 
     <button id="muteBtn" class="mute-btn" type="button" aria-label="قطع یا وصل صدا">
       صدا: روشن
