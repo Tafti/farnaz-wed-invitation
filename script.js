@@ -138,10 +138,12 @@ function setupScratchCard(onFirstScratch) {
   const resizeObserver = new ResizeObserver(() => resizeCanvas());
   resizeObserver.observe(container);
 
-  container.addEventListener("pointerdown", triggerScratchAudio, { passive: true });
-  container.addEventListener("touchstart", triggerScratchAudio, { passive: true });
-  container.addEventListener("click", triggerScratchAudio, { passive: true });
-  scratchCanvas.addEventListener("pointerdown", triggerScratchAudio, { passive: true });
+  container.addEventListener("pointerdown", triggerScratchAudio, { capture: true, passive: false });
+  container.addEventListener("touchstart", triggerScratchAudio, { capture: true, passive: false });
+  container.addEventListener("touchmove", triggerScratchAudio, { capture: true, passive: false });
+  container.addEventListener("mousedown", triggerScratchAudio, { capture: true, passive: false });
+  container.addEventListener("click", triggerScratchAudio, { capture: true, passive: true });
+  scratchCanvas.addEventListener("pointerdown", triggerScratchAudio, { capture: true, passive: false });
   scratchCanvas.addEventListener("mousedown", startScratch);
   scratchCanvas.addEventListener("mousemove", eraseAt);
   window.addEventListener("mouseup", stopScratch);
@@ -156,6 +158,7 @@ function setupMusicSample() {
 
   let muted = false;
   let playStarted = false;
+  let playPending = null;
 
   weddingAudio.volume = 0.35;
   weddingAudio.muted = false;
@@ -166,12 +169,30 @@ function setupMusicSample() {
     muteBtn.textContent = muted ? "صدا: خاموش" : "صدا: روشن";
   }
 
-  async function tryPlay() {
+  function tryPlay() {
     if (playStarted) return true;
+    if (playPending) return playPending;
+
     try {
-      await weddingAudio.play();
-      playStarted = true;
-      return true;
+      const result = weddingAudio.play();
+
+      if (!result || typeof result.then !== "function") {
+        playStarted = true;
+        return true;
+      }
+
+      playPending = result
+        .then(() => {
+          playStarted = true;
+          playPending = null;
+          return true;
+        })
+        .catch(() => {
+          playPending = null;
+          return false;
+        });
+
+      return playPending;
     } catch (error) {
       // Mobile browsers may require first user interaction.
       return false;
