@@ -55,8 +55,9 @@ function setupScratchCard(onFirstScratch) {
 
   let scratching = false;
   let hasTriggeredScratchAudio = false;
+  let lastBrushPoint = null;
 
-  function triggerScratchAudio() {
+  function activateCircleAudio() {
     if (hasTriggeredScratchAudio) return;
     const maybePromise = onFirstScratch?.();
 
@@ -88,11 +89,31 @@ function setupScratchCard(onFirstScratch) {
     event.preventDefault();
     if (!scratching) return;
 
-    const { x, y } = getPoint(event);
+    const point = getPoint(event);
+    const from = lastBrushPoint || point;
     ctx.globalCompositeOperation = "destination-out";
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    // Core stroke plus fine uneven bristles creates a natural brush reveal.
+    ctx.lineWidth = 30;
     ctx.beginPath();
-    ctx.arc(x, y, 18, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.moveTo(from.x, from.y);
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
+
+    for (let bristle = 0; bristle < 7; bristle += 1) {
+      const offset = (Math.random() - 0.5) * 18;
+      const width = 1.4 + Math.random() * 2.8;
+
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      ctx.moveTo(from.x + offset, from.y + offset);
+      ctx.lineTo(point.x + offset, point.y + offset);
+      ctx.stroke();
+    }
+
+    lastBrushPoint = point;
     checkRevealProgress();
   }
 
@@ -123,13 +144,15 @@ function setupScratchCard(onFirstScratch) {
 
   function startScratch(event) {
     scratching = true;
-    triggerScratchAudio();
+    activateCircleAudio();
+    lastBrushPoint = getPoint(event);
     eraseAt(event);
     if (scratchHint) scratchHint.style.opacity = "0.25";
   }
 
   function stopScratch() {
     scratching = false;
+    lastBrushPoint = null;
     if (scratchHint) scratchHint.style.opacity = "0.8";
   }
 
@@ -138,12 +161,15 @@ function setupScratchCard(onFirstScratch) {
   const resizeObserver = new ResizeObserver(() => resizeCanvas());
   resizeObserver.observe(container);
 
-  container.addEventListener("pointerdown", triggerScratchAudio, { capture: true, passive: false });
-  container.addEventListener("touchstart", triggerScratchAudio, { capture: true, passive: false });
-  container.addEventListener("touchmove", triggerScratchAudio, { capture: true, passive: false });
-  container.addEventListener("mousedown", triggerScratchAudio, { capture: true, passive: false });
-  container.addEventListener("click", triggerScratchAudio, { capture: true, passive: true });
-  scratchCanvas.addEventListener("pointerdown", triggerScratchAudio, { capture: true, passive: false });
+  const circleImage = container.querySelector("img");
+  const activateEvents = ["pointerdown", "touchstart", "mousedown", "click"];
+
+  [container, circleImage, scratchCanvas].filter(Boolean).forEach((target) => {
+    activateEvents.forEach((eventName) => {
+      target.addEventListener(eventName, activateCircleAudio, { capture: true, passive: true });
+    });
+  });
+
   scratchCanvas.addEventListener("mousedown", startScratch);
   scratchCanvas.addEventListener("mousemove", eraseAt);
   window.addEventListener("mouseup", stopScratch);
