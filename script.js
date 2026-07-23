@@ -2,6 +2,7 @@ const scratchCanvas = document.getElementById("scratchCanvas");
 const scratchHint = document.getElementById("scratchHint");
 const muteBtn = document.getElementById("muteBtn");
 const weddingAudio = document.getElementById("weddingAudio");
+const startAudioBtn = document.getElementById("startAudioBtn");
 
 const cardData = {
   title: "دعوت نامه عروسی - فرناز و شهریار",
@@ -249,4 +250,11 @@ function setupMusicSample() {
 const musicController = setupMusicSample();
 setupScratchCard(() => {
   return musicController?.start();
+});
+
+startAudioBtn?.addEventListener("click", async () => {
+  const didStart = await musicController?.start();
+  if (didStart) {
+    startAudioBtn.classList.add("is-hidden");
+  }
 });
