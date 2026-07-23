@@ -2,7 +2,6 @@ const scratchCanvas = document.getElementById("scratchCanvas");
 const scratchHint = document.getElementById("scratchHint");
 const muteBtn = document.getElementById("muteBtn");
 const weddingAudio = document.getElementById("weddingAudio");
-const startAudioBtn = document.getElementById("startAudioBtn");
 
 const cardData = {
   title: "دعوت نامه عروسی - فرناز و شهریار",
@@ -51,7 +50,7 @@ function setupScratchCard(onFirstScratch) {
     ctx.fillStyle = "rgba(91, 47, 38, 0.55)";
     ctx.font = `${Math.max(14, Math.floor(width * 0.085))}px Vazirmatn`;
     ctx.textAlign = "center";
-    ctx.fillText("اینجا را خراش دهید", width / 2, height / 2 + 4);
+    ctx.fillText("کلیک کنید", width / 2, height / 2 + 4);
   }
 
   let scratching = false;
@@ -92,31 +91,39 @@ function setupScratchCard(onFirstScratch) {
 
     const point = getPoint(event);
     const from = lastBrushPoint || point;
-    ctx.globalCompositeOperation = "destination-out";
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-
-    // Continuous brush stroke with offset bristles; no stamped erase circles.
-    ctx.lineWidth = 34;
-    ctx.beginPath();
-    ctx.moveTo(from.x, from.y);
-    ctx.lineTo(point.x, point.y);
-    ctx.stroke();
-
     const dx = point.x - from.x;
     const dy = point.y - from.y;
-    const length = Math.hypot(dx, dy) || 1;
+    const length = Math.hypot(dx, dy);
+
+    // Do not draw a zero-length initial dab, which appears as a circle.
+    if (length < 2) return;
+
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.lineCap = "butt";
+    ctx.lineJoin = "bevel";
+
     const normalX = -dy / length;
     const normalY = dx / length;
+    const tangentX = dx / length;
+    const tangentY = dy / length;
 
-    for (let bristle = 0; bristle < 9; bristle += 1) {
-      const offset = (bristle - 4) * 3.1 + (Math.random() - 0.5) * 1.5;
-      const width = 1.4 + Math.random() * 2.8;
+    // Uneven parallel bristles create a real brush texture instead of one solid line.
+    for (let bristle = 0; bristle < 18; bristle += 1) {
+      const offset = (bristle - 8.5) * 2.2 + (Math.random() - 0.5) * 1.4;
+      const width = 0.9 + Math.random() * 2.1;
+      const startJitter = (Math.random() - 0.5) * 7;
+      const endJitter = (Math.random() - 0.5) * 7;
 
       ctx.lineWidth = width;
       ctx.beginPath();
-      ctx.moveTo(from.x + normalX * offset, from.y + normalY * offset);
-      ctx.lineTo(point.x + normalX * offset, point.y + normalY * offset);
+      ctx.moveTo(
+        from.x + normalX * offset + tangentX * startJitter,
+        from.y + normalY * offset + tangentY * startJitter,
+      );
+      ctx.lineTo(
+        point.x + normalX * offset + tangentX * endJitter,
+        point.y + normalY * offset + tangentY * endJitter,
+      );
       ctx.stroke();
     }
 
@@ -153,7 +160,6 @@ function setupScratchCard(onFirstScratch) {
     scratching = true;
     activateCircleAudio();
     lastBrushPoint = getPoint(event);
-    eraseAt(event);
     if (scratchHint) scratchHint.style.opacity = "0.25";
   }
 
@@ -250,11 +256,4 @@ function setupMusicSample() {
 const musicController = setupMusicSample();
 setupScratchCard(() => {
   return musicController?.start();
-});
-
-startAudioBtn?.addEventListener("click", async () => {
-  const didStart = await musicController?.start();
-  if (didStart) {
-    startAudioBtn.classList.add("is-hidden");
-  }
 });

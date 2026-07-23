@@ -221,34 +221,6 @@ body {
   touch-action: none;
 }
 
-.start-audio-btn {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  width: min(72%, 178px);
-  transform: translate(-50%, -50%);
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 999px;
-  padding: 10px 12px;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.6;
-  color: #fff;
-  background: rgba(91, 47, 38, 0.7);
-  box-shadow: 0 8px 18px rgba(91, 47, 38, 0.25);
-  backdrop-filter: blur(4px);
-  cursor: pointer;
-  transition: opacity 220ms ease, transform 220ms ease;
-}
-
-.start-audio-btn.is-hidden {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.9);
-  pointer-events: none;
-}
-
 .scratch-hint {
   margin: 10px 0 0;
   font-size: 12px;
