@@ -56,6 +56,7 @@ function setupScratchCard(onFirstScratch) {
   let scratching = false;
   let hasTriggeredScratchAudio = false;
   let lastBrushPoint = null;
+  let brushedDuringGesture = false;
 
   function activateCircleAudio() {
     if (hasTriggeredScratchAudio) return;
@@ -85,12 +86,7 @@ function setupScratchCard(onFirstScratch) {
     };
   }
 
-  function eraseAt(event) {
-    event.preventDefault();
-    if (!scratching) return;
-
-    const point = getPoint(event);
-    const from = lastBrushPoint || point;
+  function eraseBrushStroke(from, point) {
     const dx = point.x - from.x;
     const dy = point.y - from.y;
     const length = Math.hypot(dx, dy);
@@ -131,6 +127,34 @@ function setupScratchCard(onFirstScratch) {
     checkRevealProgress();
   }
 
+  function eraseAt(event) {
+    event.preventDefault();
+    if (!scratching) return;
+
+    const point = getPoint(event);
+    const from = lastBrushPoint || point;
+    const before = lastBrushPoint;
+
+    eraseBrushStroke(from, point);
+    if (before && Math.hypot(point.x - before.x, point.y - before.y) >= 2) {
+      brushedDuringGesture = true;
+    }
+  }
+
+  function eraseClickBrush(event) {
+    if (brushedDuringGesture) {
+      brushedDuringGesture = false;
+      return;
+    }
+
+    const point = getPoint(event);
+    const brushLength = 70;
+    const from = { x: point.x - brushLength / 2, y: point.y + brushLength * 0.16 };
+    const to = { x: point.x + brushLength / 2, y: point.y - brushLength * 0.16 };
+
+    eraseBrushStroke(from, to);
+  }
+
   function checkRevealProgress() {
     const sampleStep = 8;
     const data = ctx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height).data;
@@ -158,6 +182,7 @@ function setupScratchCard(onFirstScratch) {
 
   function startScratch(event) {
     scratching = true;
+    brushedDuringGesture = false;
     activateCircleAudio();
     lastBrushPoint = getPoint(event);
     if (scratchHint) scratchHint.style.opacity = "0.25";
@@ -185,11 +210,17 @@ function setupScratchCard(onFirstScratch) {
 
   scratchCanvas.addEventListener("mousedown", startScratch);
   scratchCanvas.addEventListener("mousemove", eraseAt);
+  scratchCanvas.addEventListener("click", eraseClickBrush);
   window.addEventListener("mouseup", stopScratch);
 
   scratchCanvas.addEventListener("touchstart", startScratch, { passive: false });
   scratchCanvas.addEventListener("touchmove", eraseAt, { passive: false });
-  window.addEventListener("touchend", stopScratch);
+  scratchCanvas.addEventListener("touchend", (event) => {
+    if (!brushedDuringGesture) {
+      eraseClickBrush(event);
+    }
+    stopScratch();
+  });
 }
 
 function setupMusicSample() {
