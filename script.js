@@ -9,7 +9,7 @@ const cardData = {
   date: "شنبه ۲۸ شهریور ۱۴۰۵ - ساعت ۱۸:۳۰",
 };
 
-function setupScratchCard() {
+function setupScratchCard(onFirstScratch) {
   if (!scratchCanvas) return;
 
   const container = scratchCanvas.parentElement;
@@ -54,6 +54,7 @@ function setupScratchCard() {
   }
 
   let scratching = false;
+  let hasTriggeredScratchAudio = false;
 
   function getPoint(event) {
     const rect = scratchCanvas.getBoundingClientRect();
@@ -106,6 +107,10 @@ function setupScratchCard() {
 
   function startScratch(event) {
     scratching = true;
+    if (!hasTriggeredScratchAudio) {
+      hasTriggeredScratchAudio = true;
+      onFirstScratch?.();
+    }
     eraseAt(event);
     if (scratchHint) scratchHint.style.opacity = "0.25";
   }
@@ -162,32 +167,14 @@ function setupMusicSample() {
     }
   });
 
-  const unlockAndStart = async () => {
-    await tryPlay();
-    window.removeEventListener("pointerdown", unlockAndStart);
-    window.removeEventListener("touchstart", unlockAndStart);
-    window.removeEventListener("keydown", unlockAndStart);
+  updateMuteState();
+
+  return {
+    start: tryPlay,
   };
-
-  window.addEventListener("pointerdown", unlockAndStart, { once: true });
-  window.addEventListener("touchstart", unlockAndStart, { once: true });
-  window.addEventListener("keydown", unlockAndStart, { once: true });
-  window.addEventListener("pageshow", tryPlay, { once: true });
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") {
-      tryPlay();
-    }
-  });
-
-  window.addEventListener("load", () => {
-    tryPlay();
-  });
-
-  setTimeout(() => {
-    tryPlay();
-  }, 120);
 }
 
-setupScratchCard();
-setupMusicSample();
+const musicController = setupMusicSample();
+setupScratchCard(() => {
+  musicController?.start();
+});
