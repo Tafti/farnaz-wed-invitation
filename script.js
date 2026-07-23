@@ -307,7 +307,7 @@ function setupAddressModal() {
     addressModal.classList.add("is-open");
     addressModal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
-    addressModal.querySelector("[data-close-address]")?.focus();
+    addressModal.querySelector(".address-modal-close")?.focus();
   });
 
   addressModal.querySelectorAll("[data-close-address]").forEach((element) => {

@@ -313,11 +313,15 @@ body {
 
 .address-modal {
   position: fixed;
-  z-index: 35;
+  z-index: 50;
   inset: 0;
   display: grid;
   place-items: center;
-  padding: 18px;
+  padding:
+    max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
   opacity: 0;
   visibility: hidden;
   transition: opacity 220ms ease, visibility 220ms ease;
@@ -339,8 +343,11 @@ body {
   position: relative;
   z-index: 1;
   width: min(100%, 460px);
-  max-height: min(88dvh, 760px);
-  overflow: auto;
+  max-height: calc(100dvh - 24px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: 24px 20px 20px;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 26px;
@@ -388,6 +395,40 @@ body {
 
 body.modal-open {
   overflow: hidden;
+}
+
+@media (max-height: 600px) {
+  .address-modal {
+    place-items: start center;
+  }
+
+  .address-modal-content {
+    padding: 14px 16px 16px;
+    border-radius: 20px;
+  }
+
+  .address-modal-content .eyebrow {
+    font-size: 10px;
+  }
+
+  .address-modal-content .names {
+    margin: 4px 0 8px;
+    font-size: clamp(30px, 8vw, 38px);
+  }
+
+  .address-modal-content .address-image-wrap {
+    margin-bottom: 8px;
+  }
+
+  .address-modal-content .address-image {
+    max-height: 31dvh;
+    object-fit: contain;
+  }
+
+  .map-route-link {
+    padding: 9px 16px;
+    font-size: 13px;
+  }
 }
 
 
