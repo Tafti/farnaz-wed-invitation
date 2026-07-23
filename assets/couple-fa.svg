@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="تصویر عروس و داماد">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f9eadc" />
+      <stop offset="55%" stop-color="#edc2a0" />
+      <stop offset="100%" stop-color="#cf8458" />
+    </linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8a442d" />
+      <stop offset="100%" stop-color="#5a2c22" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#bg)" />
+
+  <g opacity="0.23" fill="none" stroke="url(#ink)" stroke-width="8">
+    <path d="M95 780c70-40 105-95 112-168" />
+    <path d="M905 780c-70-40-105-95-112-168" />
+    <path d="M245 925c45-135 160-208 255-232" />
+    <path d="M755 925c-45-135-160-208-255-232" />
+  </g>
+
+  <g fill="#7a3a29" opacity="0.72">
+    <circle cx="202" cy="572" r="14" />
+    <circle cx="248" cy="542" r="10" />
+    <circle cx="798" cy="572" r="14" />
+    <circle cx="752" cy="542" r="10" />
+    <circle cx="432" cy="804" r="11" />
+    <circle cx="568" cy="804" r="11" />
+  </g>
+
+  <g fill="none" stroke="url(#ink)" stroke-width="11" opacity="0.55">
+    <path d="M365 430c45-30 84-44 135-44 47 0 91 14 133 44" />
+    <path d="M365 465c45 29 87 42 135 42 51 0 92-14 133-42" />
+  </g>
+
+  <text x="500" y="455" text-anchor="middle" font-family="Lalezar, Vazirmatn, sans-serif" font-size="120" fill="#5b2f26">فرناز و شهریار</text>
+  <text x="500" y="548" text-anchor="middle" font-family="Vazirmatn, sans-serif" font-size="33" fill="#6f3528" letter-spacing="1">جشن عشق ما</text>
+</svg>

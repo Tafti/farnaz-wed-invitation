@@ -1,0 +1,217 @@
+:root {
+  --sand: #f3e9db;
+  --peach: #f6c8a7;
+  --amber: #d2814f;
+  --plum: #5b2f26;
+  --cream: #fff8f1;
+  --card: rgba(255, 248, 241, 0.76);
+  --line: rgba(91, 47, 38, 0.2);
+  --shadow: 0 20px 45px rgba(91, 47, 38, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Vazirmatn", sans-serif;
+  color: var(--plum);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(246, 200, 167, 0.45), transparent 50%),
+    radial-gradient(circle at 80% 12%, rgba(210, 129, 79, 0.35), transparent 44%),
+    linear-gradient(145deg, #fffaf4 0%, #f8ecdf 35%, #f3e9db 100%);
+}
+
+.page {
+  position: relative;
+  min-height: 100dvh;
+  padding: 16px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.bg-shape {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(1px);
+  animation: float 9s ease-in-out infinite;
+}
+
+.bg-shape-1 {
+  width: 220px;
+  height: 220px;
+  background: linear-gradient(45deg, rgba(246, 200, 167, 0.6), rgba(210, 129, 79, 0.35));
+  top: -48px;
+  right: -64px;
+}
+
+.bg-shape-2 {
+  width: 160px;
+  height: 160px;
+  background: linear-gradient(45deg, rgba(210, 129, 79, 0.25), rgba(91, 47, 38, 0.13));
+  left: -64px;
+  bottom: 80px;
+  animation-delay: 1.2s;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 0);
+  background-size: 3px 3px;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.invite-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  padding: 26px 22px 28px;
+  border-radius: 28px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(9px);
+  box-shadow: var(--shadow);
+  text-align: center;
+  animation: reveal 700ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.02em;
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.78;
+}
+
+.names {
+  margin: 10px 0 6px;
+  font-family: "Lalezar", cursive;
+  font-size: clamp(40px, 12vw, 52px);
+  line-height: 0.95;
+  font-weight: 400;
+}
+
+.date {
+  margin: 0 0 20px;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+.scratch-wrap {
+  margin: 0 auto 16px;
+}
+
+.reveal-photo {
+  position: relative;
+  width: min(70vw, 250px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid rgba(255, 248, 241, 0.9);
+  box-shadow: 0 10px 26px rgba(91, 47, 38, 0.23);
+}
+
+.reveal-photo img,
+.reveal-photo canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.reveal-photo img {
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.reveal-photo canvas {
+  touch-action: none;
+}
+
+.scratch-hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  letter-spacing: 0;
+  opacity: 0.8;
+  transition: opacity 220ms ease;
+}
+
+.details {
+  margin: 16px 0 14px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px dashed rgba(91, 47, 38, 0.34);
+  background: rgba(255, 255, 255, 0.33);
+}
+
+.detail-title {
+  margin: 0;
+  letter-spacing: 0.02em;
+  font-size: 11px;
+  opacity: 0.74;
+}
+
+.venue-link {
+  display: inline-block;
+  margin: 6px 0 4px;
+  color: var(--plum);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(91, 47, 38, 0.55);
+}
+
+.detail-note {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(12px) rotate(4deg);
+  }
+}
+
+@media (min-width: 640px) {
+  .invite-card {
+    padding: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
