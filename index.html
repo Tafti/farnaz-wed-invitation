@@ -4,86 +4,115 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>دعوت نامه عروسی</title>
-    <meta
-      name="description"
-      content="کارت دعوت عروسی تعاملی با تصویر خراش پذیر، آدرس قابل کلیک و اشتراک گذاری آسان"
-    />
+    <meta name="description" content="دعوت نامه عروسی فرناز و شهریار" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fa_IR" />
     <meta property="og:site_name" content="دعوت نامه عروسی" />
     <meta property="og:title" content="دعوت نامه عروسی فرناز و شهریار" />
-    <meta
-      property="og:description"
-      content="با افتخار شما را به جشن عروسی فرناز و شهریار دعوت می کنیم"
-    />
+    <meta property="og:description" content="با افتخار شما را به جشن عروسی فرناز و شهریار دعوت می کنیم" />
     <meta property="og:url" content="https://tafti.github.io/farnaz-wed-invitation/" />
-    <meta
-      property="og:image"
-      content="https://tafti.github.io/farnaz-wed-invitation/assets/share-thumb.png"
-    />
+    <meta property="og:image" content="https://tafti.github.io/farnaz-wed-invitation/assets/share-thumb.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="1200" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="دعوت نامه عروسی فرناز و شهریار" />
-    <meta
-      name="twitter:description"
-      content="با افتخار شما را به جشن عروسی فرناز و شهریار دعوت می کنیم"
-    />
-    <meta
-      name="twitter:image"
-      content="https://tafti.github.io/farnaz-wed-invitation/assets/share-thumb.png"
-    />
+    <meta name="twitter:description" content="با افتخار شما را به جشن عروسی فرناز و شهریار دعوت می کنیم" />
+    <meta name="twitter:image" content="https://tafti.github.io/farnaz-wed-invitation/assets/share-thumb.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="intro-doors" aria-hidden="true">
-      <div class="intro-door intro-door-left"></div>
-      <div class="intro-door intro-door-right"></div>
-      <div class="intro-door-title">دعوت عروسی</div>
-    </div>
+    <main class="invite" aria-label="کارت دعوت عروسی">
+      <div class="leaf leaf-top" aria-hidden="true"></div>
+      <div class="leaf leaf-bottom" aria-hidden="true"></div>
+      <div class="leaf leaf-side-left" aria-hidden="true"></div>
+      <div class="leaf leaf-side-right" aria-hidden="true"></div>
+      <div class="leaf leaf-photo-left" aria-hidden="true"></div>
+      <div class="leaf leaf-photo-right" aria-hidden="true"></div>
 
-    <main class="page">
-      <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
-      <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
+      <button id="musicBtn" class="music" type="button" aria-label="پخش موسیقی">
+        <span class="music-note">♪</span>
+      </button>
 
-      <section class="invite-card" aria-label="کارت دعوت عروسی">
-        <p class="eyebrow">به همراه خانواده های گرامی</p>
-        <h1 class="names"> فرناز  و شهریار</h1>
-        <p class="date">دوشنبه ۲ شهریور ۱۴۰۵ • ساعت ۱۸:۳۰</p>
+      <section class="hero">
+        <p class="intro">با عشق، شما را به جشن آغاز زندگی مان دعوت می کنیم</p>
 
-        <div class="scratch-wrap">
-          <div class="reveal-photo" role="img" aria-label="تصویر عروس و داماد">
-            <img src="shahriarwed.jpg" alt="تصویر عروس و داماد" />
-            <canvas id="scratchCanvas" aria-hidden="true"></canvas>
-          </div>
-         
+        <div class="divider divider-top"><i></i><b>♡</b><i></i></div>
+
+        <div class="names-wrap">
+          <div class="names-en" aria-hidden="true">FARNAZ &amp; SHAHRYAR</div>
+          <h1>فرناز <span>و</span> شهریار</h1>
         </div>
 
-        <div class="details">
-          <p class="detail-title">محل برگزاری</p>
-          <button id="addressBtn" class="venue-link address-open-btn" type="button" aria-haspopup="dialog">
-            مشاهده آدرس مراسم
-          </button>
-          <p class="detail-note">برای دیدن نقشه و مسیر، روی آدرس بزنید</p>
+        <p class="warm">از حضور گرم شما، قصه ی ما کامل تر می شود.</p>
+
+        <div class="meta">
+          <div><span class="icon">◷</span> شروع مراسم از ۱۸:۳۰</div>
+          <div class="meta-sep"></div>
+          <div><span class="icon">▣</span> دوشنبه ۲ شهریور ۱۴۰۵</div>
         </div>
 
+        <figure class="photo">
+          <img src="bg-image.jpg" alt="تصویر فرناز و شهریار" />
+        </figure>
       </section>
+
+      <section class="panel schedule">
+        <h2>برنامه مراسم</h2>
+        <div class="schedule-grid">
+          <div class="schedule-item">
+            <div class="schedule-icon">💍</div>
+            <strong>مراسم عقد</strong>
+            <span>۱۸:۳۰ تا ۱۹:۳۰</span>
+          </div>
+          <div class="vertical-line"></div>
+          <div class="schedule-item">
+            <div class="schedule-icon">✦</div>
+            <strong>جشن و پذیرایی</strong>
+            <span>۱۹:۳۰ تا پاسی از شب</span>
+          </div>
+        </div>
+        <p>حضور شما، خاطره ی این شب را برایمان ماندگارتر خواهد کرد.</p>
+      </section>
+
+      <section class="location">
+        <h2>محل برگزاری</h2>
+        <div class="panel location-card">
+          <div class="pin" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="presentation" focusable="false">
+              <path d="M24 44c8-10.2 12-17 12-23 0-7-5.4-12-12-12S12 14 12 21c0 6 4 12.8 12 23Z" />
+              <circle cx="24" cy="21" r="5.5" />
+            </svg>
+          </div>
+          <div class="address">
+            <strong>باغ عمارت موگه شهریار </strong>
+            <span> (مارینا)</span>
+          </div>
+          <button id="addressBtn" class="route" type="button" aria-haspopup="dialog">مشاهده مسیر مراسم</button>
+        </div>
+      </section>
+
+      <p class="rsvp">
+        اگر افتخار همراهی شما را در این شب نداشته باشیم، سپاسگزار می شویم تا یک هفته پیش از مراسم،
+        ما را از تصمیم خود مطلع بفرمایید.
+      </p>
+
+      <p class="closing">منتظر دیدار و ساختن یکی از قشنگ ترین خاطره ها کنار شما هستیم.</p>
+      <div class="footer-heart">♡</div>
     </main>
 
     <div id="addressModal" class="address-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="آدرس مراسم">
       <div class="address-modal-backdrop" data-close-address></div>
       <section class="address-modal-content">
         <button class="address-modal-close" type="button" data-close-address aria-label="بستن صفحه آدرس">×</button>
-        <p class="eyebrow">آدرس مراسم</p>
-        <h2 class="names">فرناز و شهریار</h2>
+        <p class="modal-title">آدرس مراسم</p>
         <div class="address-image-wrap">
           <img src="address.jpg" alt="نقشه و QR آدرس مراسم" class="address-image" />
         </div>
@@ -98,18 +127,7 @@
       </section>
     </div>
 
-    <button id="muteBtn" class="mute-btn" type="button" aria-label="قطع یا وصل صدا">
-      صدا: روشن
-    </button>
-
-    <audio
-      id="weddingAudio"
-      src="assets/wedding.mp3"
-      loop
-      preload="auto"
-      playsinline
-      webkit-playsinline
-    ></audio>
+    <audio id="weddingAudio" src="assets/wedding.mp3" loop preload="metadata" playsinline webkit-playsinline></audio>
 
     <script src="script.js"></script>
   </body>

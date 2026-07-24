@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دعوت‌نامه فرناز و شهریار</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="invite">
+    <div class="leaf leaf-top" aria-hidden="true"></div>
+    <div class="leaf leaf-bottom" aria-hidden="true"></div>
+
+    <button class="menu" type="button" aria-label="منو">
+      <span></span><span></span><span></span>
+    </button>
+
+    <button class="music" type="button" aria-label="پخش موسیقی">
+      <span class="music-note">♪</span>
+    </button>
+
+    <section class="hero">
+      <p class="intro">با عشق، شما را به جشن آغاز زندگی‌مان دعوت می‌کنیم</p>
+
+      <div class="names-wrap">
+        <div class="names-en" aria-hidden="true">FARNAZ &amp; SHAHRYAR</div>
+        <h1>فرناز <span>و</span> شهریار</h1>
+      </div>
+
+      <div class="divider"><i></i><b>♡</b><i></i></div>
+
+      <p class="warm">از حضور گرم شما، قصه‌ی ما کامل‌تر می‌شود.</p>
+
+      <div class="meta">
+        <div><span class="icon">◷</span> شروع مراسم از ۱۸:۳۰</div>
+        <div class="meta-sep"></div>
+        <div><span class="icon">▣</span> دوشنبه ۲ شهریور ۱۴۰۵</div>
+      </div>
+
+      <figure class="photo">
+        <img src="couple-photo.jpg" alt="تصویر فرناز و شهریار" />
+      </figure>
+    </section>
+
+    <section class="panel schedule">
+      <h2>برنامه مراسم</h2>
+      <div class="schedule-grid">
+        <div class="schedule-item">
+          <div class="schedule-icon">💍</div>
+          <strong>مراسم عقد</strong>
+          <span>۱۸:۳۰ تا ۱۹:۳۰</span>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="schedule-item">
+          <div class="schedule-icon">✦</div>
+          <strong>جشن و پذیرایی</strong>
+          <span>۱۹:۳۰ تا پاسی از شب</span>
+        </div>
+      </div>
+      <p>حضور شما، خاطره‌ی این شب را برایمان ماندگارتر خواهد کرد.</p>
+    </section>
+
+    <section class="location">
+      <h2>محل برگزاری</h2>
+      <div class="panel location-card">
+        <div class="pin">●</div>
+        <div class="address">
+          <strong>باغ تالار ونوس</strong>
+          <span>کرج، مهرشهر، بلوار ارم</span>
+        </div>
+        <a class="route" href="#" role="button">مشاهده مسیر مراسم</a>
+      </div>
+    </section>
+
+    <p class="rsvp">
+      اگر افتخار همراهی شما را در این شب نداشته باشیم،
+      سپاسگزار می‌شویم تا یک هفته پیش از مراسم،
+      ما را از تصمیم خود مطلع بفرمایید.
+    </p>
+
+    <p class="closing">منتظر دیدار و ساختن یکی از قشنگ‌ترین خاطره‌ها کنار شما هستیم.</p>
+
+    <div class="footer-heart">♡</div>
+  </main>
+
+  <script>
+    const button = document.querySelector('.music');
+    let playing = false;
+    button.addEventListener('click', () => {
+      playing = !playing;
+      button.classList.toggle('is-playing', playing);
+      button.setAttribute('aria-label', playing ? 'توقف موسیقی' : 'پخش موسیقی');
+      button.querySelector('.music-note').textContent = playing ? 'Ⅱ' : '♪';
+    });
+  </script>
+</body>
+</html>
