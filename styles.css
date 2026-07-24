@@ -132,6 +132,250 @@ a {
   z-index: 2;
 }
 
+.falling-leaves {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.falling-leaf {
+  --x: 50%;
+  --scale: 1;
+  --dur: 12s;
+  --delay: 0s;
+  --drift: 26px;
+  --spin: 260deg;
+  position: absolute;
+  top: -120px;
+  left: var(--x);
+  width: 92px;
+  height: 132px;
+  opacity: 0.52;
+  background: url("branch leaves.svg") center / contain no-repeat;
+  transform: translate3d(-50%, -12%, 0) scale(var(--scale)) rotate(0deg);
+  animation: leaf-fall var(--dur) linear infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+
+.falling-leaf:nth-child(1) {
+  --x: 7%;
+  --scale: 0.82;
+  --dur: 11s;
+  --delay: -2s;
+  --drift: 38px;
+  --spin: 230deg;
+}
+
+.falling-leaf:nth-child(2) {
+  --x: 19%;
+  --scale: 0.98;
+  --dur: 10s;
+  --delay: -9s;
+  --drift: -34px;
+  --spin: -260deg;
+}
+
+.falling-leaf:nth-child(3) {
+  --x: 33%;
+  --scale: 0.9;
+  --dur: 12.5s;
+  --delay: -4s;
+  --drift: 22px;
+  --spin: 300deg;
+}
+
+.falling-leaf:nth-child(4) {
+  --x: 47%;
+  --scale: 1.08;
+  --dur: 10.5s;
+  --delay: -11s;
+  --drift: -24px;
+  --spin: -240deg;
+}
+
+.falling-leaf:nth-child(5) {
+  --x: 61%;
+  --scale: 0.88;
+  --dur: 13s;
+  --delay: -6s;
+  --drift: 30px;
+  --spin: 270deg;
+}
+
+.falling-leaf:nth-child(6) {
+  --x: 75%;
+  --scale: 1.02;
+  --dur: 11.5s;
+  --delay: -13s;
+  --drift: -28px;
+  --spin: -290deg;
+}
+
+.falling-leaf:nth-child(7) {
+  --x: 88%;
+  --scale: 0.94;
+  --dur: 12s;
+  --delay: -8s;
+  --drift: 20px;
+  --spin: 235deg;
+}
+
+.falling-leaf:nth-child(8) {
+  --x: 95%;
+  --scale: 0.8;
+  --dur: 13.5s;
+  --delay: -15s;
+  --drift: -18px;
+  --spin: -220deg;
+}
+
+.falling-leaf:nth-child(9) {
+  --x: 11%;
+  --scale: 0.78;
+  --dur: 14s;
+  --delay: -5s;
+  --drift: 28px;
+  --spin: 290deg;
+}
+
+.falling-leaf:nth-child(10) {
+  --x: 26%;
+  --scale: 0.96;
+  --dur: 12.5s;
+  --delay: -12s;
+  --drift: -30px;
+  --spin: -245deg;
+}
+
+.falling-leaf:nth-child(11) {
+  --x: 40%;
+  --scale: 0.86;
+  --dur: 11.2s;
+  --delay: -7s;
+  --drift: 24px;
+  --spin: 250deg;
+}
+
+.falling-leaf:nth-child(12) {
+  --x: 54%;
+  --scale: 1.05;
+  --dur: 13s;
+  --delay: -14s;
+  --drift: -26px;
+  --spin: -280deg;
+}
+
+.falling-leaf:nth-child(13) {
+  --x: 67%;
+  --scale: 0.92;
+  --dur: 11.8s;
+  --delay: -9s;
+  --drift: 22px;
+  --spin: 275deg;
+}
+
+.falling-leaf:nth-child(14) {
+  --x: 79%;
+  --scale: 1.0;
+  --dur: 12.2s;
+  --delay: -3s;
+  --drift: -20px;
+  --spin: -260deg;
+}
+
+.falling-leaf:nth-child(15) {
+  --x: 86%;
+  --scale: 0.82;
+  --dur: 14s;
+  --delay: -10s;
+  --drift: 18px;
+  --spin: 240deg;
+}
+
+.falling-leaf:nth-child(16) {
+  --x: 92%;
+  --scale: 0.88;
+  --dur: 13.5s;
+  --delay: -16s;
+  --drift: -16px;
+  --spin: -235deg;
+}
+
+.falling-leaf:nth-child(4n + 1) {
+  animation:
+    leaf-fall var(--dur) linear infinite,
+    leaf-pop 2.8s ease-in-out infinite;
+  animation-delay: var(--delay), calc(var(--delay) * 0.22);
+}
+
+.falling-leaf:nth-child(4n + 2) {
+  animation:
+    leaf-fall var(--dur) linear infinite,
+    leaf-pop 3.4s ease-in-out infinite;
+  animation-delay: var(--delay), calc(var(--delay) * 0.35);
+}
+
+.falling-leaf:nth-child(4n + 3) {
+  animation:
+    leaf-fall var(--dur) linear infinite,
+    leaf-pop 3.1s ease-in-out infinite;
+  animation-delay: var(--delay), calc(var(--delay) * 0.5);
+}
+
+.falling-leaf:nth-child(4n) {
+  animation:
+    leaf-fall var(--dur) linear infinite,
+    leaf-pop 2.6s ease-in-out infinite;
+  animation-delay: var(--delay), calc(var(--delay) * 0.15);
+}
+
+@keyframes leaf-fall {
+  0% {
+    transform: translate3d(-50%, -12%, 0) scale(calc(var(--scale) * 0.62)) rotate(-28deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.92;
+    transform: translate3d(-50%, 6vh, 0) scale(calc(var(--scale) * 1.18)) rotate(18deg);
+  }
+
+  28% {
+    transform: translate3d(calc(-50% + (var(--drift) * 0.35)), 28vh, 0) scale(calc(var(--scale) * 1.02)) rotate(calc(var(--spin) * 0.28));
+  }
+
+  58% {
+    transform: translate3d(calc(-50% + (var(--drift) * 0.72)), 62vh, 0) scale(var(--scale)) rotate(calc(var(--spin) * 0.68));
+  }
+
+  100% {
+    transform: translate3d(calc(-50% + var(--drift)), 120vh, 0) scale(calc(var(--scale) * 0.92)) rotate(var(--spin));
+    opacity: 0;
+  }
+}
+
+@keyframes leaf-pop {
+  0%,
+  62%,
+  100% {
+    filter: drop-shadow(0 8px 10px rgba(53, 74, 38, 0.12));
+    opacity: 0.45;
+  }
+
+  70% {
+    filter: drop-shadow(0 12px 14px rgba(53, 74, 38, 0.2));
+    opacity: 0.9;
+  }
+
+  76% {
+    filter: drop-shadow(0 10px 12px rgba(53, 74, 38, 0.16));
+    opacity: 0.7;
+  }
+}
+
 .leaf {
   position: absolute;
   width: 300px;
@@ -645,6 +889,16 @@ body.modal-open {
     right: 18px;
   }
 
+  .falling-leaf {
+    opacity: 0.48;
+    width: 82px;
+    height: 116px;
+  }
+
+  .falling-leaf:nth-child(n + 11) {
+    display: none;
+  }
+
   .meta {
     gap: 12px;
     font-size: 14px;
@@ -724,5 +978,11 @@ body.modal-open {
   .route {
     grid-column: 1 / -1;
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling-leaf {
+    animation: none;
   }
 }
