@@ -8,6 +8,7 @@ function setupMusicToggle() {
 
   let playing = false;
   let floatingNoteTimer = null;
+  let scrollPlaybackAttempted = false;
   weddingAudio.volume = 0.35;
 
   const note = musicBtn.querySelector(".music-note");
@@ -44,21 +45,41 @@ function setupMusicToggle() {
     updateFloatingNotes();
   }
 
+  async function startMusic() {
+    if (playing) return true;
+
+    try {
+      await weddingAudio.play();
+      playing = true;
+      updateButtonState();
+      return true;
+    } catch (error) {
+      playing = false;
+      updateButtonState();
+      return false;
+    }
+  }
+
   musicBtn.addEventListener("click", async () => {
     if (!playing) {
-      try {
-        await weddingAudio.play();
-        playing = true;
-      } catch (error) {
-        playing = false;
-      }
+      await startMusic();
     } else {
       weddingAudio.pause();
       playing = false;
+      updateButtonState();
     }
-
-    updateButtonState();
   });
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (scrollPlaybackAttempted || playing || window.scrollY < 120) return;
+
+      scrollPlaybackAttempted = true;
+      startMusic();
+    },
+    { passive: true },
+  );
 
   updateButtonState();
 }
