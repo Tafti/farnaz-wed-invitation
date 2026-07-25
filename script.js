@@ -7,14 +7,41 @@ function setupMusicToggle() {
   if (!musicBtn || !weddingAudio) return;
 
   let playing = false;
+  let floatingNoteTimer = null;
   weddingAudio.volume = 0.35;
 
   const note = musicBtn.querySelector(".music-note");
+
+  function createFloatingNote() {
+    const floatingNote = document.createElement("span");
+    const duration = 1400 + Math.random() * 900;
+
+    floatingNote.className = "music-note-bubble";
+    floatingNote.textContent = ["♪", "♫", "♩"][Math.floor(Math.random() * 3)];
+    floatingNote.style.setProperty("--note-x", `${-14 + Math.random() * 28}px`);
+    floatingNote.style.setProperty("--note-drift", `${-42 + Math.random() * 84}px`);
+    floatingNote.style.setProperty("--note-size", `${18 + Math.random() * 11}px`);
+    floatingNote.style.setProperty("--note-duration", `${duration}ms`);
+    musicBtn.append(floatingNote);
+
+    window.setTimeout(() => floatingNote.remove(), duration + 100);
+  }
+
+  function updateFloatingNotes() {
+    window.clearInterval(floatingNoteTimer);
+    musicBtn.querySelectorAll(".music-note-bubble").forEach((floatingNote) => floatingNote.remove());
+
+    if (!playing) return;
+
+    createFloatingNote();
+    floatingNoteTimer = window.setInterval(createFloatingNote, 620);
+  }
 
   function updateButtonState() {
     musicBtn.classList.toggle("is-playing", playing);
     musicBtn.setAttribute("aria-label", playing ? "توقف موسیقی" : "پخش موسیقی");
     if (note) note.textContent = "♪";
+    updateFloatingNotes();
   }
 
   musicBtn.addEventListener("click", async () => {

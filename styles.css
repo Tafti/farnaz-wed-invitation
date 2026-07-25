@@ -470,6 +470,8 @@ a {
 }
 
 .music-note {
+  position: relative;
+  z-index: 1;
   font-size: 26px;
   line-height: 1;
 }
@@ -496,15 +498,17 @@ a {
   transform: scale(1.04);
 }
 
-.music.is-playing .music-note {
+.music-note-bubble {
   position: absolute;
-  top: -32px;
+  top: 50%;
   left: 50%;
   z-index: 1;
-  color: #9c7c36;
-  font-size: 31px;
+  color: #f9e4a4;
+  font-family: Georgia, serif;
+  font-size: var(--note-size, 23px);
   text-shadow: 0 3px 7px rgba(255, 253, 245, 0.9);
-  animation: music-note-float 1.6s ease-in-out infinite;
+  pointer-events: none;
+  animation: music-note-rise var(--note-duration, 1.8s) ease-out forwards;
 }
 
 .music.is-playing::before,
@@ -529,17 +533,13 @@ a {
     transform: scale(0.82);
   }
 
-
-@keyframes music-note-float {
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(2px) rotate(-8deg);
-    opacity: 0.78;
+  22% {
+    opacity: 0.72;
   }
 
-  50% {
-    transform: translateX(-50%) translateY(-9px) rotate(8deg);
-    opacity: 1;
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
   }
 }
 
@@ -558,13 +558,20 @@ a {
     transform: scale(1.52);
   }
 }
-  22% {
-    opacity: 0.72;
+
+@keyframes music-note-rise {
+  0% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--note-x)), -20%) rotate(-10deg) scale(0.75);
+  }
+
+  18% {
+    opacity: 1;
   }
 
   100% {
     opacity: 0;
-    transform: scale(1.7);
+    transform: translate(calc(-50% + var(--note-drift)), -105px) rotate(18deg) scale(1.12);
   }
 }
 .hero {
