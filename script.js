@@ -14,7 +14,7 @@ function setupMusicToggle() {
   function updateButtonState() {
     musicBtn.classList.toggle("is-playing", playing);
     musicBtn.setAttribute("aria-label", playing ? "توقف موسیقی" : "پخش موسیقی");
-    if (note) note.textContent = playing ? "Ⅱ" : "♪";
+    if (note) note.textContent = "♪";
   }
 
   musicBtn.addEventListener("click", async () => {

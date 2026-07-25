@@ -376,6 +376,19 @@ a {
   }
 }
 
+@keyframes music-attention {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 8px 18px rgba(33, 55, 20, 0.24);
+  }
+
+  50% {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 8px rgba(168, 134, 61, 0.18), 0 10px 24px rgba(33, 55, 20, 0.34);
+  }
+}
+
 .leaf {
   position: absolute;
   width: 300px;
@@ -461,11 +474,99 @@ a {
   line-height: 1;
 }
 
+.music:not(.is-playing) {
+  animation: music-attention 1.35s ease-in-out infinite;
+}
+.music:not(.is-playing)::before,
+.music:not(.is-playing)::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid rgba(168, 134, 61, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: music-bubble 1.8s ease-out infinite;
+}
+.music:not(.is-playing)::after {
+  animation-delay: 0.9s;
+}
+
 .music.is-playing {
   background: linear-gradient(145deg, #9c7c36, #6e5524);
   transform: scale(1.04);
 }
 
+.music.is-playing .music-note {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  z-index: 1;
+  color: #9c7c36;
+  font-size: 31px;
+  text-shadow: 0 3px 7px rgba(255, 253, 245, 0.9);
+  animation: music-note-float 1.6s ease-in-out infinite;
+}
+
+.music.is-playing::before,
+.music.is-playing::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(255, 244, 191, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: music-playing-wave 1.6s ease-out infinite;
+}
+
+.music.is-playing::after {
+  animation-delay: 0.8s;
+}
+
+
+@keyframes music-bubble {
+  0% {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+
+@keyframes music-note-float {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(2px) rotate(-8deg);
+    opacity: 0.78;
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-9px) rotate(8deg);
+    opacity: 1;
+  }
+}
+
+@keyframes music-playing-wave {
+  0% {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+
+  24% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.52);
+  }
+}
+  22% {
+    opacity: 0.72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
 .hero {
   text-align: center;
   padding-top: 42px;
