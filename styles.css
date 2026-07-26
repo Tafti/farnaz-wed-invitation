@@ -820,6 +820,8 @@ h1 span {
 .address {
   display: grid;
   gap: 5px;
+  width: max-content;
+  max-width: 100%;
 }
 
 .address strong {
