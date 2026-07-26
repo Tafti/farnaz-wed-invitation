@@ -828,6 +828,9 @@ h1 span {
 
 .address span {
   font-size: 15px;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 .route {
